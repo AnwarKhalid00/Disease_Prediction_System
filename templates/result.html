@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prediction Result - Disease Prediction System</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f8ff;
+    color: #1a1a2e;
+  }
+
+  /* ── NAVBAR ── */
+  .navbar {
+    background: #ffffff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+  }
+
+  .navbar-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2563eb !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .brand-logo {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #2563eb, #60a5fa);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  .nav-link {
+    color: #555 !important;
+    font-weight: 500;
+    font-size: 0.92rem;
+    padding: 6px 14px !important;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  .nav-link:hover {
+    color: #2563eb !important;
+    background: #eff6ff;
+  }
+
+  .nav-link.active-link {
+    color: #2563eb !important;
+    background: #eff6ff;
+    font-weight: 600;
+  }
+
+  .btn-nav {
+    background: #2563eb;
+    color: white !important;
+    border-radius: 8px;
+    padding: 7px 18px !important;
+    font-weight: 600 !important;
+    transition: background 0.2s;
+  }
+
+  .btn-nav:hover {
+    background: #1d4ed8 !important;
+    color: white !important;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 60%, #1d4ed8 100%);
+    padding: 60px 0 50px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    top: -100px; right: -80px;
+  }
+
+  .page-header::after {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    bottom: -60px; left: 5%;
+  }
+
+  .page-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #bfdbfe;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  .page-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 700;
+    color: white;
+    margin-bottom: 12px;
+  }
+
+  .page-header p {
+    color: #bfdbfe;
+    font-size: 1rem;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ── RESULT CARD ── */
+  .result-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 48px 40px;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    transition: all 0.3s ease;
+  }
+
+  .result-card:hover {
+    box-shadow: 0 10px 30px rgba(37,99,235,0.1);
+    border-color: #bfdbfe;
+  }
+
+  /* Animated icon circle */
+  .result-icon {
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 3px solid #bfdbfe;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.6rem;
+    margin: 0 auto 24px;
+    animation: popIn 0.5s ease forwards;
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+  }
+
+  .result-label {
+    display: inline-block;
+    background: #eff6ff;
+    color: #2563eb;
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+  }
+
+  .result-intro {
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 10px;
+  }
+
+  /* Disease name */
+  .disease-name {
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    font-weight: 700;
+    color: #1d4ed8;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    animation: slideUp 0.6s 0.2s ease both;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Divider */
+  .result-divider {
+    border: none;
+    border-top: 2px solid #eff6ff;
+    margin: 24px 0;
+  }
+
+  /* Disclaimer box */
+  .disclaimer-box {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 0.82rem;
+    color: #92400e;
+    text-align: left;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 28px;
+    animation: slideUp 0.6s 0.4s ease both;
+  }
+
+  /* Action buttons */
+  .btn-predict-again {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 13px 32px;
+    border-radius: 10px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 14px rgba(37,99,235,0.35);
+    animation: slideUp 0.6s 0.5s ease both;
+  }
+
+  .btn-predict-again:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(37,99,235,0.45);
+    color: white;
+  }
+
+  .btn-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: #6b7280;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 13px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    border: 1px solid #e5e7eb;
+    transition: all 0.25s ease;
+    animation: slideUp 0.6s 0.6s ease both;
+  }
+
+  .btn-home:hover {
+    color: #2563eb;
+    border-color: #bfdbfe;
+    background: #eff6ff;
+    transform: translateY(-2px);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #1a1a2e;
+    color: #9ca3af;
+    text-align: center;
+    padding: 22px 0;
+    font-size: 0.85rem;
+    margin-top: 60px;
+  }
+
+  /* ── FADE UP ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+
+    <a class="navbar-brand" href="/">
+      <div class="brand-logo">🏥</div>
+      Disease Predictor
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center gap-1">
+        <li class="nav-item"><a class="nav-link {% if active=='home' %}active-link{% endif %}" href="/">🏠 Home</a></li>
+        <li class="nav-item"><a class="nav-link active-link" href="/predict_page">🔍 Predict</a></li>
+        <li class="nav-item"><a class="nav-link {% if active=='contact' %}active-link{% endif %}" href="/contact">📞 Contact</a></li>
+        <li class="nav-item"><a class="nav-link {% if active=='about' %}active-link{% endif %}" href="/about">👨‍💻 About</a></li>
+        <li class="nav-item ms-2">
+          <a class="nav-link btn-nav" href="/predict_page">Try Now →</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+
+<!-- ── PAGE HEADER ── -->
+<div class="page-header">
+  <div class="page-tag">🤖 AI Result</div>
+  <h1>Prediction Complete</h1>
+  <p>Based on your symptoms and lifestyle, our ML model has predicted the following condition.</p>
+</div>
+
+
+<!-- ── RESULT ── -->
+<div class="container py-5 fade-up">
+
+  <div class="result-card">
+
+    <!-- Icon -->
+    <div class="result-icon">🩺</div>
+
+    <!-- Label -->
+    <div class="result-label">🤖 AI Prediction Result</div>
+
+    <!-- Intro text -->
+    <p class="result-intro">The predicted disease based on your symptoms is:</p>
+
+    <!-- Disease name from Flask -->
+    <div class="disease-name">{{ disease }}</div>
+
+    <hr class="result-divider">
+
+    <!-- Disclaimer -->
+    <div class="disclaimer-box">
+      ⚠️ <span><strong>Disclaimer:</strong> This prediction is generated by an AI model and is for informational purposes only. Please consult a qualified doctor for proper medical advice and diagnosis.</span>
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <a href="/predict_page" class="btn-predict-again">
+        🔍 Predict Again
+      </a>
+      <a href="/" class="btn-home">
+        🏠 Go to Home
+      </a>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>© 2025 Disease Prediction System &nbsp;·&nbsp; Final Year Project &nbsp;·&nbsp; Built with 💙 using Python &amp; Flask</p>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

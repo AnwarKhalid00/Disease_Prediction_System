@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - Disease Prediction System</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f8ff;
+    color: #1a1a2e;
+  }
+
+  /* ── NAVBAR ── */
+  .navbar {
+    background: #ffffff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+  }
+
+  .navbar-brand {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2563eb !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .brand-logo {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #2563eb, #60a5fa);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  .nav-link {
+    color: #555 !important;
+    font-weight: 500;
+    font-size: 0.92rem;
+    padding: 6px 14px !important;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  .nav-link:hover {
+    color: #2563eb !important;
+    background: #eff6ff;
+  }
+
+  .nav-link.active-link {
+    color: #2563eb !important;
+    background: #eff6ff;
+    font-weight: 600;
+  }
+
+  .btn-nav {
+    background: #2563eb;
+    color: white !important;
+    border-radius: 8px;
+    padding: 7px 18px !important;
+    font-weight: 600 !important;
+    transition: background 0.2s;
+  }
+
+  .btn-nav:hover {
+    background: #1d4ed8 !important;
+    color: white !important;
+  }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 60%, #1d4ed8 100%);
+    padding: 60px 0 50px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    top: -100px; right: -80px;
+  }
+
+  .page-header::after {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    bottom: -60px; left: 5%;
+  }
+
+  .page-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #bfdbfe;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  .page-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 700;
+    color: white;
+    margin-bottom: 12px;
+  }
+
+  .page-header p {
+    color: #bfdbfe;
+    font-size: 1rem;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* ── CARDS ── */
+  .white-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 30px;
+    transition: all 0.3s ease;
+  }
+
+  .white-card:hover {
+    box-shadow: 0 10px 30px rgba(37,99,235,0.1);
+    border-color: #bfdbfe;
+    transform: translateY(-3px);
+  }
+
+  /* ── SECTION LABELS ── */
+  .section-badge {
+    display: inline-block;
+    background: #eff6ff;
+    color: #2563eb;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+
+  .section-heading {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 14px;
+  }
+
+  /* ── PROJECT OVERVIEW ── */
+  .overview-text {
+    color: #4b5563;
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+
+  /* ── PROFILE CARDS ── */
+  .profile-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 32px 24px;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+  }
+
+  .profile-card:hover {
+    box-shadow: 0 10px 30px rgba(37,99,235,0.1);
+    border-color: #bfdbfe;
+    transform: translateY(-4px);
+  }
+
+  .profile-img-wrap {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    border: 4px solid #dbeafe;
+    overflow: hidden;
+    margin: 0 auto 16px;
+    background: #eff6ff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+  }
+
+  .profile-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+
+  .profile-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 4px;
+  }
+
+  .profile-degree {
+    font-size: 0.82rem;
+    color: #6b7280;
+    margin-bottom: 2px;
+  }
+
+  .profile-college {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-bottom: 14px;
+  }
+
+  .role-badge {
+    display: inline-block;
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+
+  .profile-desc {
+    font-size: 0.85rem;
+    color: #6b7280;
+    line-height: 1.65;
+  }
+
+  /* ── TECH STACK ── */
+  .tech-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .tech-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: #f5f8ff;
+    border: 1px solid #e0eaff;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #374151;
+    transition: all 0.2s ease;
+  }
+
+  .tech-chip:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #2563eb;
+    transform: translateY(-2px);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #1a1a2e;
+    color: #9ca3af;
+    text-align: center;
+    padding: 22px 0;
+    font-size: 0.85rem;
+    margin-top: 60px;
+  }
+
+  /* ── FADE UP ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+
+    <a class="navbar-brand" href="/">
+      <div class="brand-logo">🏥</div>
+      Disease Predictor
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center gap-1">
+        <li class="nav-item"><a class="nav-link {% if active=='home' %}active-link{% endif %}" href="/">🏠 Home</a></li>
+        <li class="nav-item"><a class="nav-link {% if active=='predict' %}active-link{% endif %}" href="/predict_page">🔍 Predict</a></li>
+        <li class="nav-item"><a class="nav-link {% if active=='contact' %}active-link{% endif %}" href="/contact">📞 Contact</a></li>
+        <li class="nav-item"><a class="nav-link active-link" href="/about">👨‍💻 About</a></li>
+        <li class="nav-item ms-2">
+          <a class="nav-link btn-nav" href="/predict_page">Try Now →</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+
+<!-- ── PAGE HEADER ── -->
+<div class="page-header">
+  <div class="page-tag">👨‍💻 About This Project</div>
+  <h1>Meet the Team &amp; Project</h1>
+  <p>A Final Year Project built with passion using  Machine Learning to make healthcare smarter.</p>
+</div>
+
+
+<!-- ── MAIN CONTENT ── -->
+<div class="container py-5">
+
+
+  <!-- PROJECT OVERVIEW -->
+  <div class="white-card mb-4 fade-up">
+    <div class="section-badge">Project Overview</div>
+    <h2 class="section-heading">What is this System?</h2>
+    <p class="overview-text">
+      The <strong>Disease Prediction System</strong> is a Machine Learning–based web application that predicts
+      possible diseases based on symptoms provided by the user. Built as a Final Year Project, this system
+      helps users quickly identify potential health conditions using Artificial Intelligence — making basic
+      healthcare guidance accessible to everyone.
+    </p>
+  </div>
+
+
+  <!-- PROJECT CREATORS -->
+  <div class="mb-2 fade-up">
+    <div class="section-badge">The Team</div>
+    <h2 class="section-heading">Project Creators</h2>
+  </div>
+
+  <div class="row g-4 mb-4 fade-up">
+
+    <!-- Creator 1 -->
+    <div class="col-md-6">
+      <div class="profile-card">
+
+        <div class="profile-img-wrap">
+          <img src="{{ url_for('static', filename='images/profile1.png') }}"
+               alt="Khalid Anwar"
+               onerror="this.style.display='none'; this.parentNode.innerHTML='👨‍💻';">
+        </div>
+
+        <div class="profile-name">Khalid Anwar</div>
+        <div class="profile-degree">B.Tech — Software Engineering</div>
+        <div class="profile-college">Noida Institute of Engineering and Technology</div>
+        <div class="role-badge">🧠 ML Developer</div>
+        <p class="profile-desc">
+          Worked on model training, data preprocessing, feature engineering, and the core disease prediction system using Scikit-learn.
+        </p>
+      </div>
+    </div>
+
+    <!-- Creator 2 -->
+    <div class="col-md-6">
+      <div class="profile-card">
+
+        <div class="profile-img-wrap">
+          <img src="{{ url_for('static', filename='images/profile2.png') }}"
+               alt="Mantasha Choudhary"
+               onerror="this.style.display='none'; this.parentNode.innerHTML='👩‍💻';">
+        </div>
+
+        <div class="profile-name">Mantasha Choudhary</div>
+        <div class="profile-degree">B.Tech — Software Engineering</div>
+        <div class="profile-college">Noida Institute of Engineering and Technology</div>
+        <div class="role-badge">🌐 Web Developer</div>
+        <p class="profile-desc">
+          Worked on frontend design, backend logic, Flask integration, routing, and overall UI/UX of the application.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- TECH STACK -->
+  <div class="white-card fade-up">
+    <div class="section-badge">Tech Stack</div>
+    <h2 class="section-heading">Technologies Used</h2>
+
+    <div class="tech-grid">
+      <div class="tech-chip">🐍 Python</div>
+      <div class="tech-chip">🤖 Random Forest</div>
+      <div class="tech-chip">🌶️ Flask</div>
+      <div class="tech-chip">📊 Pandas</div>
+      <div class="tech-chip">🔢 NumPy</div>
+      <div class="tech-chip">⚙️ Scikit-learn</div>
+      <div class="tech-chip">🌐 HTML &amp; CSS</div>
+      <div class="tech-chip">🅱️ Bootstrap 5</div>
+    </div>
+  </div>
+
+
+</div>
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>© 2025 Disease Prediction System &nbsp;·&nbsp; Final Year Project &nbsp;·&nbsp; Built with 💙 using Python &amp; Flask</p>
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
